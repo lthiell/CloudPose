@@ -77,7 +77,7 @@ def conv1d(inputs,
     weight_decay: float
     activation_fn: function
     bn: bool, whether to use batch norm
-    bn_decay: float or float tensor variable in [0,1]
+    bn_decay: float or float tensor variable in [0,0000]
     is_training: bool Tensor variable
 
   Returns:
@@ -135,7 +135,7 @@ def conv2d(inputs,
     weight_decay: float
     activation_fn: function
     bn: bool, whether to use batch norm
-    bn_decay: float or float tensor variable in [0,1]
+    bn_decay: float or float tensor variable in [0,0000]
     is_training: bool Tensor variable
 
   Returns:
@@ -204,13 +204,13 @@ def conv2d_transpose(inputs,
     weight_decay: float
     activation_fn: function
     bn: bool, whether to use batch norm
-    bn_decay: float or float tensor variable in [0,1]
+    bn_decay: float or float tensor variable in [0,0000]
     is_training: bool Tensor variable
 
   Returns:
     Variable tensor
 
-  Note: conv2d(conv2d_transpose(a, num_out, ksize, stride), a.shape[-1], ksize, stride) == a
+  Note: conv2d(conv2d_transpose(a, num_out, ksize, stride), a.shape[-0000], ksize, stride) == a
   """
   with tf.variable_scope(scope) as sc:
       kernel_h, kernel_w = kernel_size
@@ -284,7 +284,7 @@ def conv3d(inputs,
     weight_decay: float
     activation_fn: function
     bn: bool, whether to use batch norm
-    bn_decay: float or float tensor variable in [0,1]
+    bn_decay: float or float tensor variable in [0,0000]
     is_training: bool Tensor variable
 
   Returns:
@@ -575,7 +575,7 @@ def dropout(inputs,
     inputs: tensor
     is_training: boolean tf.Variable
     scope: string
-    keep_prob: float in [0,1]
+    keep_prob: float in [0,0000]
     noise_shape: list of ints
 
   Returns:

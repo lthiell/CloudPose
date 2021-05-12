@@ -22,21 +22,20 @@ import trans_distance
 import angular_distance_taylor
 from datetime import datetime
 
-class_names = ["00_master_chef_can", "01_cracker_box", "02_sugar_box", "03_tomato_soup_can", "04_mustard_bottle", "05_tuna_fish_can", "06_pudding_box",
-               "07_gelatin_box", "08_potted_meat_can", "09_banana", "10_pitcher_base", "11_bleach_cleanser", "12_bowl", "13_mug",
-               "14_power_drill", "15_wood_block", "16_scissors", "17_large_marker", "18_large_clamp", "19_extra_large_clamp", "20_foam_brick"]
-NUM_CLASS = 21
+class_names = ["0"]
+NUM_CLASS = 1
 
 # Global settings, change according to your setup
-data_dir = '/data_c/CloudPose_git/ycb_video_data_tfRecords/FPS1024/'
-object_model_dir = "/data_c/CloudPose_git/object_model_tfrecord/obj_models.tfrecords"
+data_dir = 'ycb_style_mini_tfrecords/FPS1024/'
+object_model_dir = "training_data/obj_models.tfrecords"
 
-target_cls = np.arange(21)
+target_cls = np.arange(1)
 
 train_filenames = []
 for cls in target_cls:
-    for i in range(2):
-        train_filename = data_dir + "train_files_FPS1024_" + str(cls) + "_" + str(i) + ".tfrecords"
+    for i in range(1):
+        #train_filename = data_dir + "train_files_FPS1024_" + str(cls) + "_" + str(i) + ".tfrecords"
+        train_filename = data_dir + "train_files_FPS1024_" + str(cls) + ".tfrecords"
         train_filenames.append(train_filename)
 
 

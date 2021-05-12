@@ -6,100 +6,19 @@ import open3d
 import sys
 from datetime import datetime
 
-NUM_CLASS = 21
+NUM_CLASS = 1
 NUM_POINT = 1024
 BATCH_SIZE = 1
 minimum_points_in_segment = NUM_POINT
 threshold_distance_per_class = 0.2 * np.ones((NUM_CLASS,), dtype=np.float32)
 
-data_dir = '../sort_by_seq/'
-out_dir = '../FPS1024/'
+data_dir = '../../ycb_style_mini_tfrecords/0000/'
+out_dir = '../../ycb_style_mini_tfrecords/FPS1024/'
 
 # all train sequences for each object class
 seq_id = [
-# master chef can
 # target_cls = 0
-[1, 6, 12, 13, 14, 17, 24, 31, 40, 41, 65, 68, 69, 78, 86, 91],
-
-# cracker box
-# target_cls = 1
-[1, 4, 7, 16, 17, 19, 25, 29, 35, 41, 44, 45, 66, 70, 74, 82, 85],
-
-# sugar box
-# target_cls = 2
-[1, 14, 15, 20, 25, 29, 33, 36, 37, 43, 60, 74, 77, 85, 89],
-
-# tomato soup can
-# target_cls = 3
-[3, 8, 12, 13, 17, 18, 21, 22, 33, 34, 36, 37, 44, 60, 66, 68, 76, 79, 87, 89],
-
-# mustard bottle
-# target_cls = 4
-[1, 2, 8, 15, 16, 24, 26, 30, 31, 37, 40, 46, 61, 65, 69, 71, 72, 76, 79, 84, 87],
-
-# tuna fish can
-# target_cls = 5
-[8, 15, 16, 22, 28, 34, 35, 39, 45, 67, 69, 72, 75, 83, 90],
-
-# pudding box
-# target_cls = 6
-[2, 4, 6, 15, 19, 20, 23, 24, 28, 31, 32, 40, 44, 45, 61, 70, 76, 79, 85],
-
-# gelatin box
-# target_cls = 7
-[0, 3, 6, 12, 16, 19, 22, 38, 39, 40, 44, 45, 63, 65, 68, 69, 70, 72, 80, 85, 87],
-
-# potted meat can
-# target_cls = 8
-[2, 5, 8, 14, 17, 23, 26, 29, 34, 39, 43, 47, 60, 61, 73, 77, 87],
-
-# banana
-# target_cls = 9
-[2, 5, 10, 13, 20, 23, 30, 35, 38, 39, 47, 60, 66, 70, 75, 82, 83, 84, 87, 91],
-
-# # pitcher base
-# target_cls = 10
-[9, 14, 20, 21, 26, 30, 31, 34, 41, 42, 43, 62, 63, 67, 80, 88],
-
-# bleach cleanser
-# target_cls = 11
-[6, 7, 8, 11, 18, 21, 32, 33, 36, 43, 62, 71, 74, 80, 87, 91],
-
-# bowl
-# target_cls = 12
-[7, 11, 13, 24, 27, 32, 40],
-
-# mug
-# target_cls = 13
-[0, 3, 7, 11, 22, 23, 27, 33, 39, 65, 69, 70, 74, 75, 78, 84, 87, 90],
-
-# # drill
-# target_cls = 14
-[6, 9, 10, 11, 12, 18, 24, 30, 37, 38, 77, 81, 83, 86, 88],
-
-# wood block
-# target_cls = 15
-[2, 4, 9, 18, 21, 26, 28, 31, 32, 64, 68, 71, 81, 87, 90],
-
-# scissors
-# target_cls = 16
-[4, 10, 13, 16, 23, 27, 28, 38, 46, 47, 63, 64, 67, 70, 78, 82, 88, 91],
-
-# large marker
-# target_cls = 17
-[2, 5, 10, 27, 28, 29, 35, 38, 40, 42, 46, 62, 63, 73, 75, 79, 80, 86, 89],
-
-# large clamp
-# target_cls = 18
-[5, 10, 11, 18, 25, 27, 35, 37, 38, 61, 62, 67, 77, 83, 86, 90],
-
-# extra_large_clamp
-# target_cls = 19
-[3, 11, 15, 19, 25, 32, 33, 36, 47, 63, 64, 66, 73, 81, 89],
-
-# foam brick
-# target_cls = 20
-[0, 12, 19, 22, 28, 36, 40, 41, 42, 46, 61, 64, 66, 71, 73, 79, 81, 84, 87, 91]
+[0],
 ]
 
 
@@ -218,10 +137,10 @@ def calc_distances(p0, points):
 def FPS_random(pts, K, seq_id, frame_id, class_id):
     farthest_pts = np.zeros((K, 3))
     farthest_pts_idx = np.zeros(K)
-    print "seq %d frame %d class %d segment_size %d" % (seq_id, frame_id, class_id, pts.shape[0])
+    print ("seq %d frame %d class %d segment_size %d" % (seq_id, frame_id, class_id, pts.shape[0]))
     upper_bound = pts.shape[0] - 1
     if upper_bound==0:
-        print "ZERO seq %d frame %d class %d " % (seq_id, frame_id, class_id)
+        print ("ZERO seq %d frame %d class %d " % (seq_id, frame_id, class_id))
     sys.stdout.flush()
     first_idx = random.randint(0, upper_bound)
     farthest_pts[0] = pts[first_idx]
@@ -320,7 +239,7 @@ def create_example(datasample):
 
 def dataset_generator(ds, sess):
 
-    print ds
+    print (ds)
     tr_iterator = ds.make_one_shot_iterator()
     next_element = tr_iterator.get_next()
 
@@ -345,7 +264,7 @@ def creat_records(ds, record_path):
 
             for datasample in generator:
 
-                print counter
+                print (counter)
 
                 example = create_example(datasample)
                 writer.write(example.SerializeToString())
@@ -371,7 +290,7 @@ def get_data_set(target_cls):
 
 
 def main():
-    for i in np.arange(0, 21):
+    for i in np.arange(0, 1):
         start_time = datetime.now()
         get_data_set(i)
         time_elapsed = datetime.now() - start_time

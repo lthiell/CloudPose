@@ -8,10 +8,10 @@ import tensorflow as tf
 import sys
 
 # Global settings
-num_classes = 21
-num_sequences = 92
-YCB_PATH = "/data_c/YCB_Video_Dataset/" # change this to your path to YCB Video Dataset
-OUT_PATH = "../sort_by_seq/"
+num_classes = 1
+num_sequences = 1
+YCB_PATH = "../../ycb_style_mini" # change this to your path to YCB Video Dataset
+OUT_PATH = "../../ycb_style_mini_tfrecords/0000/"
 
 def _int64_feature(value):
 	return tf.train.Feature(int64_list=tf.train.Int64List(value=value))
@@ -24,7 +24,7 @@ def _bytes_feature(value):
 
 def write_sequence(seq_dir, seq_id, output_file):
 	files = os.listdir(seq_dir)
-	num_frames = len(files) / 5
+	num_frames = int(len(files) / 5)
 
 	frame_id_list = list(range(1,num_frames+1))
 	random.shuffle(frame_id_list)
